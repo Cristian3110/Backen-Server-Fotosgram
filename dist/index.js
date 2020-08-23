@@ -13,7 +13,7 @@ server.app.use('/user', usuario_1.default);
 mongoose_1.default.connect('mongodb://localhost:27017/fotosgram', { useNewUrlParser: true, useCreateIndex: true }, (err) => {
     if (err)
         throw err;
-    console.log('Base de Datos ONLINE');
+    console.log('Base de Datos Online');
 });
 // Lavantar Express
 server.start(() => {

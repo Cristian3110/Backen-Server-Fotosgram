@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/fotosgram',
     
     if (err) throw err;
 
-    console.log('Base de Datos ONLINE');
+    console.log('Base de Datos Online');
 
 
         })
