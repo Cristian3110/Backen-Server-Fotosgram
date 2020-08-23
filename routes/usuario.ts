@@ -2,6 +2,7 @@ import {Router, Request, Response} from "express";
 import { Usuario } from "../models/usuario.model";
 import bcryt from 'bcrypt';
 import Token from '../classes/token';
+import { verificaToken } from '../middlewares/autenticacion';
 
 
 
@@ -96,6 +97,16 @@ userRoutes.post('/create',(req:Request, res:Response)=>{
         })
     })
     
+});
+
+// Actualizar usuario
+userRoutes.post('/update', verificaToken, (req:any, res:Response)=>{
+
+        res.json({
+            ok: true,
+            usuario:req.usuario
+        })
+
 });
 
 export default userRoutes;

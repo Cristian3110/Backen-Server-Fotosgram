@@ -1,0 +1,26 @@
+// Un middlewares es una función que se ejecuta antes de la ruta de autenticar
+
+import {Request, Response, NextFunction} from 'express';
+import Token from '../classes/token';
+
+export const verificaToken =(req: any, res:Response, next:NextFunction)=>{
+
+    // obteniendo el token personalizado
+
+    const userToken = req.get('x-token') || '';
+
+    Token.comprobarToken(userToken)
+    .then((decoded: any) =>{
+        console.log('Decoded', decoded);
+        req.usuario = decoded.usuario;
+        next();
+    })
+    .catch(err=>{
+        res.json({
+            ok:false,
+            mensaje: 'Token no es correcto'
+        });
+    })
+
+
+}
