@@ -6,6 +6,44 @@ import bcryt from 'bcrypt';
 
 const userRoutes = Router();
 
+// Login de Usuarios
+
+userRoutes.post('/login', (req: Request, res: Response)=>{
+        
+    const body = req.body;
+
+    Usuario.findOne({ email: body.email}, (err, userDB)=>{
+
+        if (err) throw err;
+
+        if (!userDB){
+            return res.json({
+                ok:false,
+                mensaje: 'Usuario/Contraseña no son correctos'
+            });
+        }
+
+        if (userDB.compararPassword(body.password)){
+
+            res.json({
+                ok: true,
+                token: 'kjvbakjsdnvksdvasv'
+            })
+        } else{
+            return res.json({
+                ok:false,
+                mensaje: 'Usuario/Contraseña no son correctos'
+            });
+            
+        }  
+
+
+
+    })
+})
+
+
+
 // userRoutes.get('/prueba',(req:Request, res:Response)=>{
 
 //     res.json({
