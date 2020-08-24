@@ -35,3 +35,6 @@ const postSchema = new Schema({
         coords: string;
         usuario: string;
     }
+
+    export const Post=model<Ipost>('Post',postSchema);
+    
