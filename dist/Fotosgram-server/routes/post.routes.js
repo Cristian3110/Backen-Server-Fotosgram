@@ -56,21 +56,9 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => {
         });
     }
     const file = req.files.image;
-    if (!file) {
-        return res.status(400).json({
-            ok: false,
-            mensaje: 'No se subió ningún archivo - image'
-        });
-    }
-    if (!file.mimetype.includes('image')) {
-        return res.status(400).json({
-            ok: false,
-            mensaje: 'Lo que subió no es una imagen'
-        });
-    }
     res.json({
         ok: false,
-        file: file.mimetype
+        file
     });
 });
 exports.default = postRoutes;
