@@ -4,11 +4,13 @@ import { Post } from '../models/post.model';
 
 //import fileUpload from 'express-fileupload';
 import { FileUpload } from '../interfaces/file-upload';
+import FileSystem from '../classes/file-system';
 
 
 
 
     const postRoutes = Router();
+    const fileSystem = new FileSystem;
     
     // Crear Posts paginados
     // En esta petición se puede dejar la verificación del token o dejarlo público como en este caso (quitamos en verifiToken)
@@ -80,6 +82,8 @@ import { FileUpload } from '../interfaces/file-upload';
                 mensaje: 'Lo que subió no es una imagen'
             });
         }
+
+        fileSystem.guardarImagenTemporal(file, req.usuario._id);
 
         res.json({
             ok: false,
