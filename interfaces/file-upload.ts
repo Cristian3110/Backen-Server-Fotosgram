@@ -7,5 +7,8 @@ export interface FileUpload {
     tempFilePath: string;
     truncated: boolean;
     mimetype: string;
+
+    // mv es algo que viene con el file de la imagen con express
+    mv: Function;
    
 }

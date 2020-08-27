@@ -14,13 +14,31 @@ export default class FileSystem{
 
         guardarImagenTemporal(file: FileUpload, userID: string){
 
-            // Crear carpetas
-            const path = this.crearCarpetaUsuario(userID) // 
+            return new Promise ((resolve, reject)=>{ // Ahora nuestra función guardar retorna una promesa
 
-            // Nombre archivo
-           const nombreArchivo = this.generarNombreunico(file.name);
-           console.log(file.name); // para observar el nombre original del archivo (imagen)
-           console.log(nombreArchivo); // nombre proporcionado con el Id unico que se estableció
+                // Crear carpetas
+                const path = this.crearCarpetaUsuario(userID) // 
+    
+                // Nombre archivo
+               const nombreArchivo = this.generarNombreunico(file.name);
+               // console.log(file.name); // para observar el nombre original del archivo (imagen)
+               // console.log(nombreArchivo); // nombre proporcionado con el Id unico que se estableció
+    
+    
+               //Mover el archivo del Temp a nuestra carpeta ((no es promesa sino callback))
+               file.mv(`${path}/${nombreArchivo}`, (err:any)=>{ // representa el MoveFile (MV) 
+                    
+                if (err){
+                    // no se pudo mover
+                    reject(err);
+                }else{
+                    // todo salió bien
+                    resolve();
+                }
+               } ) 
+
+            });  
+
         };
 
         private generarNombreunico (nombreOriginal: string){

@@ -15,6 +15,10 @@ server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 //FileUpload
 server.app.use(express_fileupload_1.default());
+/***************************************************************************
+ * en caso de que no se suba la imagen en la carpeta Temp, se realiza lo siguiente
+ *  server.app.use(fileUpload({ useTempFiles: true}));
+ *********************************************************************************/
 // Rutas de mi aplicación
 server.app.use('/user', usuario_1.default);
 server.app.use('/posts', post_routes_1.default);

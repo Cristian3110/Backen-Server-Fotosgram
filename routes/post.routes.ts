@@ -59,7 +59,7 @@ import FileSystem from '../classes/file-system';
 
     
     // Servicio para subir archivos
-    postRoutes.post('/upload', [verificaToken], (req:any, res: Response)=>{
+    postRoutes.post('/upload', [verificaToken], async (req:any, res: Response)=>{
         if (!req.files){
             return res.status(400).json({
                 ok: false,
@@ -83,10 +83,10 @@ import FileSystem from '../classes/file-system';
             });
         }
 
-        fileSystem.guardarImagenTemporal(file, req.usuario._id);
+        await fileSystem.guardarImagenTemporal(file, req.usuario._id);
 
         res.json({
-            ok: false,
+            ok: true,
             file: file.mimetype
         });
 

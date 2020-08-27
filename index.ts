@@ -16,6 +16,11 @@ server.app.use( bodyParser.json());
 
 //FileUpload
 server.app.use(fileUpload());
+/***************************************************************************
+ * en caso de que no se suba la imagen en la carpeta Temp, se realiza lo siguiente
+ *  server.app.use(fileUpload({ useTempFiles: true}));
+ *********************************************************************************/
+
 
 // Rutas de mi aplicación
 server.app.use('/user', userRoutes);
