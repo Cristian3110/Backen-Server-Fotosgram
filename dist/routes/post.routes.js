@@ -17,7 +17,7 @@ const autenticacion_1 = require("../middlewares/autenticacion");
 const post_model_1 = require("../models/post.model");
 const file_system_1 = __importDefault(require("../classes/file-system"));
 const postRoutes = express_1.Router();
-const fileSystem = new file_system_1.default;
+const fileSystem = new file_system_1.default();
 // Crear Posts paginados
 // En esta petición se puede dejar la verificación del token o dejarlo público como en este caso (quitamos en verifiToken)
 postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -81,4 +81,17 @@ postRoutes.post('/upload', [autenticacion_1.verificaToken], (req, res) => __awai
         file: file.mimetype
     });
 }));
+postRoutes.get('/imagen/:userid/:img', (req, res) => {
+    const userId = req.params.userid;
+    const img = req.params.img;
+    const pathFoto = fileSystem.getFotoUrl(userId, img);
+    res.sendFile(pathFoto);
+    /** para fines de pruebas
+     *
+     res.json({
+         userID, img
+     })
+     *
+     */
+});
 exports.default = postRoutes;

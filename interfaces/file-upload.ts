@@ -8,7 +8,7 @@ export interface FileUpload {
     truncated: boolean;
     mimetype: string;
 
-    // mv es algo que viene con el file de la imagen con express
+    // mv es un método que viene con express que nos permite el movimiento de archivos de las carpetas
     mv: Function;
    
 }

@@ -10,7 +10,7 @@ import FileSystem from '../classes/file-system';
 
 
     const postRoutes = Router();
-    const fileSystem = new FileSystem;
+    const fileSystem = new FileSystem();
     
     // Crear Posts paginados
     // En esta petición se puede dejar la verificación del token o dejarlo público como en este caso (quitamos en verifiToken)
@@ -93,6 +93,26 @@ import FileSystem from '../classes/file-system';
             file: file.mimetype
         });
 
+
+    });
+
+    
+    postRoutes.get('/imagen/:userid/:img', (req:any, res:Response)=>{
+
+        const userId = req.params.userid;
+        const img = req.params.img;  
+
+        const pathFoto = fileSystem.getFotoUrl(userId, img);
+  
+        res.sendFile(pathFoto);
+
+        /** para fines de pruebas
+         * 
+         res.json({
+             userID, img
+         })
+         * 
+         */
 
     });
 

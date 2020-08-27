@@ -1,8 +1,8 @@
 import { FileUpload } from '../interfaces/file-upload';
 
-import path from 'path';
-import fs from 'fs';
-import uniqid from 'uniqid';
+import path from 'path'; // paquete para los path o rutas de node
+import fs from 'fs'; //paquete filesystem de node propiamente
+import uniqid from 'uniqid'; 
 
 
 // Definiendo la clase para crear la carpetas necesarias para hacer el fileUpload y obtener el path
@@ -12,15 +12,15 @@ export default class FileSystem{
         constructor(){};
 
 
-        guardarImagenTemporal(file: FileUpload, userID: string){
+        guardarImagenTemporal(file: FileUpload, userId: string){
 
             return new Promise ((resolve, reject)=>{ // Ahora nuestra función guardar retorna una promesa
 
                 // Crear carpetas
-                const path = this.crearCarpetaUsuario(userID) // 
+                const path = this.crearCarpetaUsuario(userId) // 
     
                 // Nombre archivo
-               const nombreArchivo = this.generarNombreunico(file.name);
+               const nombreArchivo = this.generarNombreUnico(file.name);
                // console.log(file.name); // para observar el nombre original del archivo (imagen)
                // console.log(nombreArchivo); // nombre proporcionado con el Id unico que se estableció
     
@@ -35,13 +35,13 @@ export default class FileSystem{
                     // todo salió bien
                     resolve();
                 }
-               } ) 
+               }); 
 
             });  
 
         };
 
-        private generarNombreunico (nombreOriginal: string){
+        private generarNombreUnico (nombreOriginal: string){
             
             // copyXXXXX.png
             const nombreArr = nombreOriginal.split('.'); // separados por punto ( . )
@@ -57,9 +57,9 @@ export default class FileSystem{
 
         }
 
-        private crearCarpetaUsuario(userID:string){
+        private crearCarpetaUsuario(userId:string){
 
-            const pathUser= path.resolve(__dirname,'../uploads/', userID);
+            const pathUser= path.resolve(__dirname,'../uploads/', userId);
             const pathUserTemp= pathUser + '/temp/';
 
             // console.log(pathUser);
@@ -74,10 +74,10 @@ export default class FileSystem{
             return pathUserTemp;
         }
 
-        imagenesDeTempHaciaPost(userID: string){
+        imagenesDeTempHaciaPost(userId: string){
 
-            const pathTemp= path.resolve(__dirname,'../uploads/', userID, 'temp');  // capretas  
-            const pathPost= path.resolve(__dirname,'../uploads/', userID, 'posts'); //carpetas
+            const pathTemp= path.resolve(__dirname,'../uploads/', userId, 'temp');  // capretas  
+            const pathPost= path.resolve(__dirname,'../uploads/', userId, 'posts'); //carpetas
 
             if (!fs.existsSync(pathTemp)){
                 return[];
@@ -87,7 +87,7 @@ export default class FileSystem{
                 fs.mkdirSync(pathPost);
             }
 
-            const imagenesTemp = this.obtenerImagenesEnTemp(userID);
+            const imagenesTemp = this.obtenerImagenesEnTemp(userId);
 
             imagenesTemp.forEach(imagen=>{
                 fs.renameSync(`${pathTemp}/${imagen}`, `${pathPost}/${imagen}`);
@@ -96,15 +96,33 @@ export default class FileSystem{
             return imagenesTemp;
 
 
-
+  
         }
 
-        private obtenerImagenesEnTemp(userID:string){
+        private obtenerImagenesEnTemp(userId:string){
 
-            const pathTemp= path.resolve(__dirname,'../uploads/', userID, 'temp');
+            const pathTemp = path.resolve(__dirname,'../uploads/', userId, 'temp');
             return fs.readdirSync(pathTemp) || [];
         }
 
+            
+        getFotoUrl(userId:string, img: string){
+        
+            // Path de los Posts
+            const pathFoto = path.resolve(__dirname, '../uploads/', userId, 'posts', img);
+
+            // Si la imagen existe
+             const existe = fs.existsSync(pathFoto);
+              
+                 if(!existe){
+                     return path.resolve(__dirname, '../assets/400x250.jpg');
+                }
+
+
+            return pathFoto;
+
+                
+        }
 
 
 
