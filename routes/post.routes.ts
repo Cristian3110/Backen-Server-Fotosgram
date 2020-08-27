@@ -42,6 +42,9 @@ import FileSystem from '../classes/file-system';
         const body = req.body;
         body.usuario = req.usuario._id;
 
+        const imagenes = fileSystem.imagenesDeTempHaciaPost(req.usuario._id);
+        body.imgs = imagenes;
+
         Post.create(body).then( async postDB =>{
             // Datos del usuario menos la contraseña
             await postDB.populate('usuario', '-password').execPopulate();

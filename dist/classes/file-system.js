@@ -51,5 +51,24 @@ class FileSystem {
         }
         return pathUserTemp;
     }
+    imagenesDeTempHaciaPost(userID) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userID, 'temp'); // capretas  
+        const pathPost = path_1.default.resolve(__dirname, '../uploads/', userID, 'posts'); //carpetas
+        if (!fs_1.default.existsSync(pathTemp)) {
+            return [];
+        }
+        if (!fs_1.default.existsSync(pathPost)) {
+            fs_1.default.mkdirSync(pathPost);
+        }
+        const imagenesTemp = this.obtenerImagenesEnTemp(userID);
+        imagenesTemp.forEach(imagen => {
+            fs_1.default.renameSync(`${pathTemp}/${imagen}`, `${pathPost}/${imagen}`);
+        });
+        return imagenesTemp;
+    }
+    obtenerImagenesEnTemp(userID) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userID, 'temp');
+        return fs_1.default.readdirSync(pathTemp) || [];
+    }
 }
 exports.default = FileSystem;
