@@ -1,6 +1,8 @@
 import Server from './classes/server';
 import mongoose from 'mongoose';
 
+import cors from 'cors';
+
 import fileUpload from 'express-fileupload';
 import bodyParser from 'body-parser';
 
@@ -21,6 +23,8 @@ server.app.use(fileUpload());
  *  server.app.use(fileUpload({ useTempFiles: true}));
  *********************************************************************************/
 
+ // Configurar COR (para que no tengamos el error en la petición http desde el frontend)
+server.app.use(cors({ origin: true, credentials:true}));
 
 // Rutas de mi aplicación
 server.app.use('/user', userRoutes);
